@@ -88,4 +88,80 @@ public class HappyNumber {
         System.out.println(n + " is a happy number: " + isHappy);
    }
 }
+Quiz2
+1)
+import java.util.Arrays;
+public class SeparateOddEvenArrays {
+    public static void main(String[] args) {
+        int[] arr = {10, 3, 5, 12, 17, 22};
+        int evenCount = 0, oddCount = 0;
+        for (int num : arr) {
+            if (num % 2 == 0) {
+                evenCount++;
+            } else {
+                oddCount++;
+            }
+        }
+        int[] evenArr = new int[evenCount];
+        int[] oddArr = new int[oddCount];
+        int evenIndex = 0, oddIndex = 0;
+        for (int num : arr) {
+            if (num % 2 == 0) {
+                evenArr[evenIndex++] = num;
+            } else {
+                oddArr[oddIndex++] = num;
+            }
+        }
+        System.out.println("Even elements: " + Arrays.toString(evenArr));
+        System.out.println("Odd elements: " + Arrays.toString(oddArr));
+    }
+}
+2)
+public class StringCompression {
+   public static String compressString(String s) {
+       StringBuilder compressed = new StringBuilder();
+       int count = 0;
+       char currentChar = s.charAt(0);
+       for (char c : s.toCharArray()) {
+           if (c == currentChar) {
+               count++;
+           } else {
+               compressed.append(currentChar).append(count);
+               currentChar = c;
+               count = 1;
+           }
+       }
+       compressed.append(currentChar).append(count);
+       return compressed.toString().length() < s.length() ? compressed.toString() : s;
+   }
+   public static void main(String[] args) {
+       String input1 = "AAABBC";
+       String input2 = "AAABBCCCDE";
+       System.out.println(compressString(input1));  // Output: A3B2C
+       System.out.println(compressString(input2));  // Output: A3B2C3DE
+   }
+}
+3)
+public class PatternedString {
+    public static void main(String[] args) {
+        String input = "zohocorporationteam";
+        int len = input.length();
+        int spaces = 0;
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < spaces; j++) {
+                System.out.print(" ");
+            }
+            System.out.print(input.charAt(i));
+            if (isVowel(input.charAt(i))) {
+                System.out.println();
+                spaces++;
+            } else {
+                System.out.print(" ");
+            }
+        }
+    }
+    private static boolean isVowel(char c) {
+        return "aeiou".indexOf(c) != -1;
+    }
+}
 
