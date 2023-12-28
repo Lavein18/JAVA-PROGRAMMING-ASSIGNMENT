@@ -118,3 +118,64 @@ Number  34543 is PalPrime
 Number  565 is Palindrome
 Number  727 is PalPrime
 Number  10099 is Prime
+
+Quiz2
+1)
+class MyClass {
+    public MyClass() {
+        System.out.println("No-arguments constructor called");
+    }
+    public MyClass(int dummy) {
+    }
+    public MyClass(String name, int age) {
+        System.out.println("Parameterized constructor called with name: " + name + " and age: " + age);
+    }
+}
+2)
+public class RemoveDuplicates {
+    public static int removeDuplicates(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        int uniqueIndex = 0;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != nums[uniqueIndex]) {
+                uniqueIndex++;
+                nums[uniqueIndex] = nums[i];
+            }
+        }
+        return uniqueIndex + 1;
+    }
+    public static void main(String[] args) {
+        int[] nums = {22, 22, 77, 77, 88, 89, 89};
+        int uniqueCount = removeDuplicates(nums);
+        System.out.println("Number of unique elements: " + uniqueCount);
+    }
+}
+3)
+public class RearrangeArray {
+    public static void rearrangeArray(int[] arr) {
+        int i = 0, j = arr.length - 1;
+        while (i < j) {
+            if (arr[i] < 0) {
+                i++;
+            } else if (arr[j] > 0) {
+                j--;
+            } else {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                i++;
+                j--;
+            }
+        }
+    }
+    public static void main(String[] args) {
+        int[] arr = {-12, 11, -13, -5, 6, -7, 5, -3, -6};
+        rearrangeArray(arr);
+        System.out.println("Rearranged array: " + Arrays.toString(arr));
+    }
+}
+
+
+
