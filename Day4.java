@@ -271,6 +271,6 @@ public class Main {
             System.out.println("Motorcycle has the highest effective speed: " + motorcycleSpeed);
         } else {
             System.out.println("Car and motorcycle have the same effective speed: " + carSpeed);
-        }
-    }
-}
+        }}}
+Output
+Car has the highest effective speed: 240
