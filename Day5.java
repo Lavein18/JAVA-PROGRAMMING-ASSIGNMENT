@@ -137,3 +137,124 @@ class PalindromeFinder implements Runnable {
         return numStr.equals(new StringBuilder(numStr).reverse().toString());
     }
 }
+Quiz2
+1)
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.List;
+public class FindFilesWithExtension {
+    public static void main(String[] args) {
+        String folderPath = "/path/to/your/folder";
+        String extension = ".txt";
+        List<File> files = getFilesWithExtension(folderPath, extension);
+        for (File file : files) {
+            System.out.println(file.getName());
+        }
+    }
+    public static List<File> getFilesWithExtension(String folderPath, String extension) {
+        File folder = new File(folderPath);
+        List<File> files = new ArrayList<>();
+        FilenameFilter filter = (dir, name) -> name.toLowerCase().endsWith(extension);
+        File[] foundFiles = folder.listFiles(filter);
+        if (foundFiles != null) {
+            for (File file : foundFiles) {
+                if (file.isFile()) {
+                    files.add(file);
+                } else if (file.isDirectory()) {
+                    files.addAll(getFilesWithExtension(file.getAbsolutePath(), extension));
+                }
+            }
+        }
+        return files;
+    }
+}
+2)
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+public class CheckPositiveNumbers {
+    public static void main(String[] args) {
+        String filename = "test.txt";
+        try {
+            checkForPositiveNumbers(filename);
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: File not found.");
+        } catch (PositiveNumberException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public static void checkForPositiveNumbers(String filename) throws FileNotFoundException, PositiveNumberException {
+        Scanner scanner = new Scanner(new File(filename));
+        System.out.println("Content of " + filename + ":");
+        while (scanner.hasNextInt()) {
+            int number = scanner.nextInt();
+            System.out.print(number + " ");
+            if (number > 0) {
+                throw new PositiveNumberException("Positive number found: " + number);
+            }
+        }
+        System.out.println("\nAll numbers are non-positive.");
+    }
+}
+class PositiveNumberException extends Exception {
+    public PositiveNumberException(String message) {
+        super(message);
+    }
+}
+
+
+3)
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+public class FindMostCommonWord {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter directory name: ");
+        String directoryName = scanner.nextLine();
+        Map<String, Integer> wordCounts = new HashMap<>();
+        try {
+            countWordsInDirectory(directoryName, wordCounts);
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Directory not found.");
+            return;
+        }
+        int highestFrequency = findHighestFrequency(wordCounts);
+        printWordsWithFrequency(wordCounts, highestFrequency);
+    }
+    private static void countWordsInDirectory(String directoryName, Map<String, Integer> wordCounts) throws FileNotFoundException {
+        File directory = new File(directoryName);
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    countWordsInFile(file, wordCounts);
+                }
+            }
+        }
+    }
+    private static void countWordsInFile(File file, Map<String, Integer> wordCounts) throws FileNotFoundException {
+        Scanner fileScanner = new Scanner(file);
+        while (fileScanner.hasNext()) {
+            String word = fileScanner.next().toLowerCase();  // Convert to lowercase for case-insensitive counting
+            wordCounts.put(word, wordCounts.getOrDefault(word, 0) + 1);
+        }
+    }
+    private static int findHighestFrequency(Map<String, Integer> wordCounts) {
+        int highestFrequency = 0;
+        for (int frequency : wordCounts.values()) {
+            highestFrequency = Math.max(highestFrequency, frequency);
+        }
+        return highestFrequency;
+    }
+    private static void printWordsWithFrequency(Map<String, Integer> wordCounts, int highestFrequency) {
+        for (Map.Entry<String, Integer> entry : wordCounts.entrySet()) {
+            if (entry.getValue() == highestFrequency) {
+                System.out.println("Word: " + entry.getKey() + ", Frequency: " + entry.getValue());
+            }
+        }
+    }
+}
